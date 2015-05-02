@@ -4,6 +4,7 @@ using System.Collections;
 public class CameraController : MonoBehaviour {
 
 	public GameObject player;
+	public float smoothing = 5f;
 
 	private Vector3 offset;
 	// Use this for initialization
@@ -13,6 +14,14 @@ public class CameraController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void LateUpdate () {
-		transform.position = player.transform.position + offset;
+
+		float xrotation = Input.GetAxis ("Mouse X") * 3;
+		float yrotation = Input.GetAxis ("Mouse Y");
+
+		offset = Quaternion.Euler (yrotation, xrotation, 0) * offset;
+
+		Vector3 targetCamPos = player.transform.position + offset;
+		transform.position = Vector3.Slerp (transform.position, targetCamPos, smoothing * Time.deltaTime);
+		transform.LookAt(player.transform);
 	}
 }
