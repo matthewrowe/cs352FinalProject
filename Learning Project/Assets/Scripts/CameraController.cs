@@ -16,7 +16,7 @@ public class CameraController : MonoBehaviour {
 	void LateUpdate () {
 
 		float xrotation = Input.GetAxis ("Mouse X") * 3;
-		float yrotation = Input.GetAxis ("Mouse Y") * 3;
+		float yrotation = Input.GetAxis ("Mouse Y");
 
 		offset = Quaternion.Euler (yrotation, xrotation, 0) * offset;
 
